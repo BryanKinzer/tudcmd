@@ -1,0 +1,114 @@
+import math
+#This purpose of this code is recreate the theoretical results generated in the below report
+#in order to create a good baseline for when we add our experimental approach
+#I, Bryan, assumed that Knudsen diffusion was prominent, so the python results do not exactly match
+#the report.
+
+#Experimental and Theorectical Investigations  on Water Desalination
+#Using Direct Contact Membrane Distillation, A. Khalifa from Science Direct
+
+#Mass Flux J_w
+
+#Each variable should be defined below when it is introduced
+#each variable should be marked with if that information is
+    #given, known
+    #given, unknown
+    #derived
+    #unknown
+    #calculated
+#When a new variable is introduced mark it as unknown and then
+#remark when you find more information
+
+#General Python Syntax Notes for newbies, like me
+
+# x_NaCl**2 is equivalent to x_NaCl^2)
+#Look for libraries to help you do calculations, like math.exp(#)
+
+
+#Multi-use equations
+
+#Antione_Eq is used to determine the vapor pressure of water given temp in kelvin
+def Antione_Eq(Temp):
+    #Make sure temperature is in Kelvin
+    if Temp < 200:
+        print('check to make sure your temperatures are in Kelvin')
+    return math.exp((23.1964)-3816.44/(Temp - 46.13))
+
+
+#List of System Parameters---------
+#Conditions that are initially set
+T_mf = 40 + 273 #Deg. K chosen for test, will create a for loop
+T_mp = 5 + 273 #Deg. K chosen for test
+T_m = (T_mf + T_mp)/2
+m_NaCl = 2 #g NaCl/L H20 2 is the concentration for sweet water, which they modelled
+x_NaCl = (3.0835*10**-4)*m_NaCl # mol fraction of NaCl in H20
+x_wf = 1 - x_NaCl #x_wf is mole fraction of water in the feed side assuming that the only impurity is NaCl
+
+delta = 154*10**-6 #m membrane thickness, See Table 1
+epsilon = 0.80 #epsilon is membrane poroisity, See Table 1
+tau = 1/epsilon #tau is tortuosity
+d_pore = 0.45*10**-6 # diameter of pores, See Table 1
+R = 8314 #J/mol-K, Universal gas Constant
+Mol_w = 18.02 #g/mol, Molc. Weight of H20 molecules
+#feed flow rate = 2 g/L not currently used
+#coolant flow rate = 3.65 g/L not currently used
+#End List of System Parameters---------
+
+#Mass Transfer---------------------------------------------------------------------------
+
+Gamma_wf = 1 - (0.5*x_NaCl) - (10*(x_NaCl)**2)
+#Gamma_wf is the activity coefficient # derived
+
+Po_wf = Antione_Eq(T_mf)
+Po_wp = Antione_Eq(T_mp)
+#Po_wf is the vapor pressure on the feed side #derived
+#Po_wp is the vapor pressure on the permeate side #derived
+
+
+#D_knudsen is knudsen diffusion, derived
+# In our model we assume that all the mass transfer is through Knudsen, so alpha = 1
+
+D_knudsen = (  ((3*delta*tau)/(2*epsilon*d_pore))  * ((math.pi*R*T_m)/(8*Mol_w))**0.5  )**-1
+
+    
+
+    
+
+#Not Used:Since alpha = 1, D_molc, molecular mass diffusion, has no influence on answer, but is included here in it needs to be included
+#---------------------------------------
+PD_wa = (1.895*10**-5) * (T_m**2.072) #PD_wa is the diffusivity of water vapors in air, derived
+P_f = 75000 #P_f is pressure of feed side, unknown just put at 100,000 Pa for standard atmosphere though
+P_p = 100000 #P_p is pressure of permeate side, unknown just put at 100,000 Pa for standard atmosphere though
+P_Pore = (P_f + P_p)/2
+P_wvp = Antione_Eq(T_m)
+#P_wvp is the partial pressures of the water vapors inside the pores, Antione Eq. at Tm
+P_airPore = P_Pore - P_wvp
+#P_airPore is the partial pressure of air in pore, derived
+D_molc = (  (R*T_m*delta*tau*P_airPore)/(Mol_w*epsilon*PD_wa)  )**-1
+#--------------------------------------
+#End Not Used
+    
+# Assume that we make all our difussion through Knudsen
+# alpha, is unknown or arbitrary is the ratio of Knudsen and molecular diffusion
+alpha = 0.5
+D_eff = ((alpha/D_knudsen) + ((1-alpha)/D_molc))**-1
+
+
+
+
+J_w = D_eff*((Po_wf*(Gamma_wf)*(x_wf)) - Po_wp)
+print(J_w*3600)
+print('hello world')
+#D_eff is the eqiuvalent diffusion coeff. #derived
+   
+    
+   
+    
+    
+   
+
+    
+ 
+
+    
+    
