@@ -1,11 +1,23 @@
 
 Mass Transfer Parameters
 
-Mean Temperature Feed Side (T_mf)
-Mean Temperature Permeate Side (T_mp)
-Mean Temperature Overall T_M
-Mass Concentration of NaCL (m_NaCl) g NaCl/L H20
-Mole fraction of NaCl (x_NaCl) 3.0835*10^-4*m_NaCl
-Mole fraction of H20 (x_wf) x_wf = 1 - x_NaCl
+Fluid Properties
+  Mean Temperature Feed Side (T_mf)
+  Mean Temperature Permeate Side (T_mp)
+  Mean Temperature Overall T_M
+  Mass Concentration of NaCL (m_NaCl) g NaCl/L H20
+  Mole fraction of NaCl (x_NaCl) 3.0835*10^-4*m_NaCl
+  Mole fraction of H20 (x_wf) x_wf = 1 - x_NaCl
+  Feed Flow Rate
+  Coolant Flow Rate
 
-Not Complete
+System Physical Properties
+  Membrane thickness (delta), typically given
+  Membrane poroisity (epsilon), typically given
+  toruosity (tau), tau =1 1/epsilon
+  Pore Diameter, (d_pore) given
+
+
+Physical Constants:
+  Universal Gas Constant, R = 8314 J/mol-k
+  Molecular weight of H20 molecules, Mol_w = 18.02 g/mol
