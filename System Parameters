@@ -1,0 +1,11 @@
+
+Mass Transfer Parameters
+
+Mean Temperature Feed Side (T_mf)
+Mean Temperature Permeate Side (T_mp)
+Mean Temperature Overall T_M
+Mass Concentration of NaCL (m_NaCl) g NaCl/L H20
+Mole fraction of NaCl (x_NaCl) 3.0835*10^-4*m_NaCl
+Mole fraction of H20 (x_wf) x_wf = 1 - x_NaCl
+
+Not Complete
